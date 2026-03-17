@@ -1,8 +1,12 @@
 package handler
 
 import (
+	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"net/smtp"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -12,6 +16,14 @@ import (
 
 type Handler struct {
 	cfg *config.Config
+}
+
+type ContactForm struct {
+	Nama       string `form:"nama"`
+	Email      string `form:"email"`
+	Telepon    string `form:"telepon"`
+	Perusahaan string `form:"perusahaan"`
+	Pesan      string `form:"pesan"`
 }
 
 func New(cfg *config.Config) *Handler {
@@ -103,14 +115,6 @@ func (h *Handler) Kontak(c *fiber.Ctx) error {
 }
 
 func (h *Handler) KontakSubmit(c *fiber.Ctx) error {
-	type ContactForm struct {
-		Nama      string `form:"nama"`
-		Email     string `form:"email"`
-		Telepon   string `form:"telepon"`
-		Perusahaan string `form:"perusahaan"`
-		Pesan     string `form:"pesan"`
-	}
-
 	form := new(ContactForm)
 	if err := c.BodyParser(form); err != nil {
 		return c.Status(http.StatusBadRequest).Render("pages/kontak", fiber.Map{
@@ -146,8 +150,16 @@ func (h *Handler) KontakSubmit(c *fiber.Ctx) error {
 		})
 	}
 
-	// In production, you would save to database or send email here
-	// log.Printf("Contact form submission: %+v", form)
+	// Send email notification
+	if h.cfg.SMTPHost != "" && h.cfg.SMTPUser != "" {
+		go func() {
+			if err := h.sendContactEmail(form); err != nil {
+				log.Printf("Failed to send contact email: %v", err)
+			}
+		}()
+	} else {
+		log.Printf("Contact form submission (SMTP not configured): Nama=%s, Email=%s, Pesan=%s", form.Nama, form.Email, form.Pesan)
+	}
 
 	return c.Render("pages/kontak", fiber.Map{
 		"Title":       "Hubungi Kami — PT Logam Gold Mulia Tbk",
@@ -156,6 +168,30 @@ func (h *Handler) KontakSubmit(c *fiber.Ctx) error {
 		"Page":        "kontak",
 		"Success":     "Terima kasih! Pesan Anda telah berhasil dikirim. Tim kami akan menghubungi Anda dalam waktu dekat.",
 	})
+}
+
+func (h *Handler) sendContactEmail(form *ContactForm) error {
+	to := h.cfg.ContactEmail
+	subject := fmt.Sprintf("[Logam Gold] Pesan dari %s", form.Nama)
+
+	var body strings.Builder
+	body.WriteString(fmt.Sprintf("Nama: %s\n", form.Nama))
+	body.WriteString(fmt.Sprintf("Email: %s\n", form.Email))
+	if form.Telepon != "" {
+		body.WriteString(fmt.Sprintf("Telepon: %s\n", form.Telepon))
+	}
+	if form.Perusahaan != "" {
+		body.WriteString(fmt.Sprintf("Perusahaan: %s\n", form.Perusahaan))
+	}
+	body.WriteString(fmt.Sprintf("\nPesan:\n%s\n", form.Pesan))
+
+	msg := fmt.Sprintf("From: %s\r\nTo: %s\r\nSubject: %s\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\nReply-To: %s\r\n\r\n%s",
+		h.cfg.SMTPUser, to, subject, form.Email, body.String())
+
+	auth := smtp.PlainAuth("", h.cfg.SMTPUser, h.cfg.SMTPPass, h.cfg.SMTPHost)
+	addr := h.cfg.SMTPHost + ":" + h.cfg.SMTPPort
+
+	return smtp.SendMail(addr, auth, h.cfg.SMTPUser, []string{to}, []byte(msg))
 }
 
 func isValidEmail(email string) bool {
