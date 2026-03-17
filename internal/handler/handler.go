@@ -8,7 +8,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -154,8 +153,8 @@ func (h *Handler) KontakSubmit(c *fiber.Ctx) error {
 	}
 
 	// Send email notification
-	if h.cfg.ResendAPIKey != "" {
-		log.Printf("Sending contact email to %s via Resend API", h.cfg.ContactEmail)
+	if h.cfg.Web3FormsKey != "" {
+		log.Printf("Sending contact form to %s via Web3Forms", h.cfg.ContactEmail)
 		if err := h.sendContactEmail(form); err != nil {
 			log.Printf("Failed to send contact email: %v", err)
 			return c.Render("pages/kontak", fiber.Map{
@@ -181,26 +180,15 @@ func (h *Handler) KontakSubmit(c *fiber.Ctx) error {
 }
 
 func (h *Handler) sendContactEmail(form *ContactForm) error {
-	to := h.cfg.ContactEmail
-	subject := fmt.Sprintf("[Logam Gold] Pesan dari %s", form.Nama)
-
-	var body strings.Builder
-	body.WriteString(fmt.Sprintf("Nama: %s\n", form.Nama))
-	body.WriteString(fmt.Sprintf("Email: %s\n", form.Email))
-	if form.Telepon != "" {
-		body.WriteString(fmt.Sprintf("Telepon: %s\n", form.Telepon))
-	}
-	if form.Perusahaan != "" {
-		body.WriteString(fmt.Sprintf("Perusahaan: %s\n", form.Perusahaan))
-	}
-	body.WriteString(fmt.Sprintf("\nPesan:\n%s\n", form.Pesan))
-
-	payload := map[string]interface{}{
-		"from":    h.cfg.EmailFrom,
-		"to":      []string{to},
-		"subject": subject,
-		"text":    body.String(),
-		"reply_to": form.Email,
+	payload := map[string]string{
+		"access_key": h.cfg.Web3FormsKey,
+		"subject":    fmt.Sprintf("[Logam Gold] Pesan dari %s", form.Nama),
+		"from_name":  "PT Logam Gold Mulia Tbk",
+		"name":       form.Nama,
+		"email":      form.Email,
+		"phone":      form.Telepon,
+		"company":    form.Perusahaan,
+		"message":    form.Pesan,
 	}
 
 	jsonData, err := json.Marshal(payload)
@@ -208,11 +196,10 @@ func (h *Handler) sendContactEmail(form *ContactForm) error {
 		return fmt.Errorf("marshal: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", "https://api.resend.com/emails", bytes.NewReader(jsonData))
+	req, err := http.NewRequest("POST", "https://api.web3forms.com/submit", bytes.NewReader(jsonData))
 	if err != nil {
 		return fmt.Errorf("new request: %w", err)
 	}
-	req.Header.Set("Authorization", "Bearer "+h.cfg.ResendAPIKey)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{Timeout: 15 * time.Second}
@@ -222,12 +209,13 @@ func (h *Handler) sendContactEmail(form *ContactForm) error {
 	}
 	defer resp.Body.Close()
 
+	respBody, _ := io.ReadAll(resp.Body)
+
 	if resp.StatusCode >= 400 {
-		respBody, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("resend API error (status %d): %s", resp.StatusCode, string(respBody))
+		return fmt.Errorf("web3forms API error (status %d): %s", resp.StatusCode, string(respBody))
 	}
 
-	log.Printf("Email sent successfully to %s", to)
+	log.Printf("Email sent successfully: %s", string(respBody))
 	return nil
 }
 

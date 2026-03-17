@@ -7,8 +7,7 @@ type Config struct {
 	AppEnv       string
 	BaseURL      string
 	ContactEmail string
-	ResendAPIKey string
-	EmailFrom    string
+	Web3FormsKey string
 }
 
 func Load() *Config {
@@ -17,8 +16,7 @@ func Load() *Config {
 		AppEnv:       getEnv("APP_ENV", "development"),
 		BaseURL:      getEnv("BASE_URL", "https://logam.gold"),
 		ContactEmail: getEnv("CONTACT_EMAIL", "wiliamjones@pm.me"),
-		ResendAPIKey: getEnv("RESEND_API_KEY", ""),
-		EmailFrom:    getEnv("EMAIL_FROM", "Logam Gold <onboarding@resend.dev>"),
+		Web3FormsKey: getEnv("WEB3FORMS_KEY", ""),
 	}
 }
 
