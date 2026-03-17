@@ -94,11 +94,10 @@ func (h *Handler) FAQ(c *fiber.Ctx) error {
 
 func (h *Handler) Kontak(c *fiber.Ctx) error {
 	return c.Render("pages/kontak", fiber.Map{
-		"Title":        "Hubungi Kami — PT Logam Gold Mulia Tbk",
-		"Description":  "Hubungi PT Logam Gold Mulia Tbk untuk informasi lebih lanjut, kerja sama, atau pertanyaan seputar layanan kami.",
-		"Canonical":    h.cfg.BaseURL + "/kontak",
-		"Page":         "kontak",
-		"Web3FormsKey": h.cfg.Web3FormsKey,
+		"Title":       "Hubungi Kami — PT Logam Gold Mulia Tbk",
+		"Description": "Hubungi PT Logam Gold Mulia Tbk untuk informasi lebih lanjut, kerja sama, atau pertanyaan seputar layanan kami.",
+		"Canonical":   h.cfg.BaseURL + "/kontak",
+		"Page":        "kontak",
 	})
 }
 
