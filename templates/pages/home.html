@@ -31,30 +31,30 @@
 
 <!-- Corporate Facts Band -->
 <section class="bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-4">
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Nama Perusahaan</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Nama Perusahaan</p>
                 <p class="text-sm font-semibold text-gray-900">{{.Corp.ShortName}}</p>
             </div>
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Status</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Status</p>
                 <p class="text-sm font-semibold text-gray-900">Perseroan Terbuka</p>
             </div>
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Bursa</p>
-                <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.ListingBoard "—"}}</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Bursa</p>
+                <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.StockExchange "—"}}</p>
             </div>
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Kode Saham</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Kode Saham</p>
                 <p class="text-sm font-semibold text-amber-700">{{if .Corp.Ticker}}{{.Corp.Ticker}}{{else}}<span class="text-gray-400 font-normal text-xs">Akan diumumkan</span>{{end}}</p>
             </div>
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Sektor</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Sektor</p>
                 <p class="text-sm font-semibold text-gray-900">{{.Corp.Sector}}</p>
             </div>
             <div class="text-center lg:text-left">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Email</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Email</p>
                 <p class="text-sm font-semibold text-gray-900">{{.Corp.Email}}</p>
             </div>
         </div>

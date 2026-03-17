@@ -14,17 +14,17 @@
 </section>
 
 <!-- FAQ Accordion -->
-<section class="py-14 lg:py-20 bg-white">
+<section class="py-16 lg:py-24 bg-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {{if hasItems .Corp.FAQs}}
         <div class="space-y-3 scroll-reveal">
             {{range .Corp.FAQs}}
             <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
-                <button class="faq-toggle w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors" onclick="this.parentElement.classList.toggle('active')">
+                <button class="faq-toggle w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors" aria-expanded="false">
                     <span class="text-sm font-semibold text-gray-900 pr-4">{{.Question}}</span>
-                    <svg class="faq-icon w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="faq-icon w-4 h-4 text-gray-400 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div class="faq-answer hidden px-5 pb-4">
+                <div class="faq-content hidden px-6 pb-5">
                     <p class="text-sm text-gray-600 leading-relaxed">{{.Answer}}</p>
                 </div>
             </div>
@@ -36,15 +36,10 @@
         </div>
         {{end}}
 
-        <div class="mt-10 bg-gray-50 rounded-2xl p-6 text-center scroll-reveal">
-            <h3 class="text-sm font-semibold text-gray-900 mb-2">Pertanyaan lain?</h3>
-            <p class="text-xs text-gray-500 mb-4">Hubungi tim kami untuk informasi lebih lanjut.</p>
-            <a href="/kontak" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-amber-700 rounded-lg hover:bg-amber-800 transition-colors">Hubungi Kami</a>
+        <div class="mt-12 bg-gray-50 rounded-2xl p-8 text-center scroll-reveal">
+            <h3 class="text-base font-semibold text-gray-900 mb-2">Pertanyaan lain?</h3>
+            <p class="text-sm text-gray-500 mb-5">Hubungi tim kami untuk informasi lebih lanjut.</p>
+            <a href="/kontak" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-amber-700 rounded-lg hover:bg-amber-800 transition-colors">Hubungi Kami</a>
         </div>
     </div>
 </section>
-
-<style>
-.faq-item.active .faq-icon { transform: rotate(180deg); }
-.faq-item.active .faq-answer { display: block; }
-</style>

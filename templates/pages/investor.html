@@ -14,31 +14,31 @@
 </section>
 
 <!-- Emiten Facts -->
-<section class="py-14 lg:py-20 bg-white">
+<section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 scroll-reveal">
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Nama Emiten</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Nama Emiten</p>
                 <p class="text-sm font-semibold text-gray-900">{{.Corp.LegalName}}</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Status</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Status</p>
                 <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.Status "Perseroan Terbuka"}}</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Kode Saham</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Kode Saham</p>
                 <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.Ticker "Akan diumumkan"}}</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Bursa</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Bursa</p>
                 <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.StockExchange "Bursa Efek Indonesia (BEI)"}}</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Sektor</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Sektor</p>
                 <p class="text-sm font-semibold text-gray-900">{{fallback .Corp.Sector "Logam Mulia"}}</p>
             </div>
             <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Email IR</p>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Email IR</p>
                 <p class="text-sm font-semibold text-amber-700">{{.Corp.IREmail}}</p>
             </div>
         </div>
@@ -46,7 +46,7 @@
 </section>
 
 <!-- Documents & Disclosure -->
-<section class="py-14 lg:py-20 bg-gray-50">
+<section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 scroll-reveal">
             <span class="text-xs font-semibold text-amber-700 uppercase tracking-widest">Keterbukaan Informasi</span>
@@ -94,7 +94,7 @@
 </section>
 
 <!-- External Links -->
-<section class="py-14 lg:py-20 bg-white">
+<section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10 scroll-reveal">
             <span class="text-xs font-semibold text-amber-700 uppercase tracking-widest">Tautan Eksternal</span>
@@ -104,7 +104,7 @@
             {{if hasItems .Corp.ExternalLinks}}
             {{range .Corp.ExternalLinks}}
             <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" class="block bg-gray-50 rounded-xl p-5 border border-gray-100 hover:border-amber-200 hover:bg-amber-50/30 transition-all duration-300 group">
-                <p class="text-sm font-semibold text-gray-900 group-hover:text-amber-700 transition-colors">{{.Name}}</p>
+                <p class="text-sm font-semibold text-gray-900 group-hover:text-amber-700 transition-colors">{{.Title}}</p>
                 <p class="text-xs text-gray-500 mt-1">{{.Description}}</p>
             </a>
             {{end}}
@@ -131,7 +131,7 @@
 </section>
 
 <!-- IR Contact -->
-<section class="py-14 lg:py-20 bg-gray-50">
+<section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 scroll-reveal">
         <div class="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200 text-center">
             <h2 class="text-xl font-serif font-bold text-gray-900 mb-3">Kontak Investor Relations</h2>

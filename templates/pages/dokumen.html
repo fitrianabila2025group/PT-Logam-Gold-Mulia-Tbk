@@ -14,7 +14,7 @@
 </section>
 
 <!-- Document Categories -->
-<section class="py-14 lg:py-20 bg-white">
+<section class="py-16 lg:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{if hasItems .Corp.Documents}}
         <div class="space-y-6 scroll-reveal">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-semibold text-gray-900 truncate">{{.Title}}</p>
-                    <p class="text-xs text-gray-500">{{.Category}} · {{.Date}}</p>
+                    <p class="text-xs text-gray-500">{{.Category}} · {{.Period}}</p>
                 </div>
                 {{if .URL}}
                 <a href="{{.URL}}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-xs font-medium text-amber-700 hover:underline">Unduh →</a>

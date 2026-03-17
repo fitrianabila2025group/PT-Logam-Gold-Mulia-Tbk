@@ -6,9 +6,9 @@ type Data struct {
 	// Legal identity
 	LegalName    string
 	ShortName    string
-	Ticker       string
-	ListingBoard string
-	Status       string
+	Ticker        string
+	StockExchange string
+	Status        string
 	Sector       string
 	SubSector    string
 	YearEstd     string
@@ -16,9 +16,9 @@ type Data struct {
 	NPWP         string
 
 	// Contact
-	Email             string
-	InvestorEmail     string
-	CorpSecEmail      string
+	Email        string
+	IREmail      string
+	CorpSecEmail string
 	Phone             string
 	Website           string
 	WhatsApp          string
@@ -140,7 +140,7 @@ func Default() *Data {
 		LegalName:    "PT Logam Gold Mulia Tbk",
 		ShortName:    "Logam Gold",
 		Ticker:       "",
-		ListingBoard: "IDX",
+		StockExchange: "Bursa Efek Indonesia (BEI)",
 		Status:       "Perseroan Terbuka (Tbk)",
 		Sector:       "Logam Mulia",
 		SubSector:    "Perdagangan & Distribusi Logam Mulia",
@@ -149,7 +149,7 @@ func Default() *Data {
 		NPWP:         "",
 
 		Email:             "info@logam.gold",
-		InvestorEmail:     "ir@logam.gold",
+		IREmail:      "ir@logam.gold",
 		CorpSecEmail:      "corsec@logam.gold",
 		Phone:             "",
 		Website:           "logam.gold",
